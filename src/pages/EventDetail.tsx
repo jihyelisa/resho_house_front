@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const EventList = () => {
+const EventDetail = () => {
   const events = [
     "유진이의 클럼지 벗 해피 라이프",
     "지민이의 당 줄이기 도전",
@@ -13,26 +13,21 @@ const EventList = () => {
     "소영이의 트릴링구얼로 가는 길",
   ];
 
+  const { eventid } = useParams();
+  const intEventId = eventid ? parseInt(eventid, 10) : -1;
+  const eventTitle = intEventId < 0 ? "no event detail" : events[intEventId];
+
   return (
     <div className="text-center flex-grow flex flex-col items-center">
       <span className="fixed top-14 flex-grow bg-white w-full py-4">
-        <h2 className="text-3xl font-bold">Events</h2>
-        <p className="text-gray-600">이벤트 리스트</p>
+        <h2 className="text-3xl font-bold">Event Detail</h2>
+        <p className="text-gray-600">{eventTitle}</p>
       </span>
       <div className="flex flex-col flex-grow gap-3 w-full mt-[92px]">
-        {events.map((event, index) => (
-          <Link key={index} to={`/eventdetail/${index}`}>
-            <span
-              key={index}
-              className="flex justify-start items-center p-3 px-6 rounded-md bg-blue-100 text-gray-900"
-            >
-              {event}
-            </span>
-          </Link>
-        ))}
+        <span className="flex justify-start items-center p-3 px-6 rounded-md bg-blue-100 text-gray-900 flex-grow"></span>
       </div>
     </div>
   );
 };
 
-export default EventList;
+export default EventDetail;

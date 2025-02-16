@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/resho_logo.png";
 
 const Navbar = () => {
   return (
-    <nav className="w-full bg-blue-300 h-14 px-4 text-white flex justify-between items-center">
-      <Link to="/" className="text-white">
+    <nav className="w-full bg-blue-300 h-14 px-6 text-white flex justify-between items-center fixed top-0">
+      <Link
+        to="/"
+        className="text-white flex gap-3 justify-center items-center"
+      >
+        <img src={logo} className="w-14 invert" alt="Resho Logo" />
         <h1 className="text-xl font-bold">RESHO</h1>
       </Link>
       <div className="flex space-x-4">

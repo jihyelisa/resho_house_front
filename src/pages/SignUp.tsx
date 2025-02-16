@@ -1,6 +1,6 @@
 const SignUp = () => {
   return (
-    <div className="p-6 text-center">
+    <div className="p-6 flex flex-col justify-center items-center">
       <h2 className="text-3xl font-bold">Sign Up</h2>
       <p className="text-gray-600 mt-2 pb-16">회원가입하세염</p>
       <div className="flex justify-between items-center pb-16 h-[100px] w-[360px]">
