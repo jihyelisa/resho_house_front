@@ -11,23 +11,55 @@ const EventList = () => {
     "채원이의 미스테리 서클",
     "정희의 사이버 조각 깎기",
     "소영이의 트릴링구얼로 가는 길",
+    "동규의 오늘의 전화",
+    "호진이의 오늘은 뭘 그릴까?",
+    "현영이의 신입 일기",
+    "Cras convallis nibh eget dui placerat, eget auctor neque sagittis. Vestibulum ante ipsum primis in faucibus orci luctus et curae; Integer in ante facilisis, posuere magna nec, dictum nibh.",
+  ];
+  const imagePaths = [
+    "/images/photo_sample_1.jpeg",
+    "/images/photo_sample_2.jpeg",
+    "/images/photo_sample_3.jpeg",
   ];
 
   return (
-    <div className="text-center flex-grow flex flex-col items-center">
-      <span className="fixed top-14 flex-grow bg-white w-full py-4">
+    <div className="text-center flex-grow flex flex-col">
+      <span className="sticky top-14 w-full py-8 bg-white">
         <h2 className="text-3xl font-bold">Events</h2>
         <p className="text-gray-600">이벤트 리스트</p>
       </span>
-      <div className="flex flex-col flex-grow gap-3 w-full mt-[92px]">
+      {/* <div className="flex flex-col flex-grow gap-3 w-full"> */}
+      <div className="grid grid-cols-1 flex-grow gap-8 w-full">
         {events.map((event, index) => (
           <Link key={index} to={`/eventdetail/${index}`}>
-            <span
+            <div
               key={index}
-              className="flex justify-start items-center p-3 px-6 rounded-md bg-blue-100 text-gray-900"
+              className="grid grid-cols-3 gap-3 text-start items-center py-6 px-10 rounded-md bg-white text-gray-900 min-h-20 border-2 border-blue-100"
             >
-              {event}
-            </span>
+              <div className="col-span-2 flex flex-col gap-3">
+                <span className="">
+                  <strong>{event}</strong>
+                </span>
+                <div className="flex gap-1">
+                  <span className="text-sm bg-blue-100 rounded-xl inline-block py-1 px-2">
+                    유진
+                  </span>
+                  <span className="text-sm bg-blue-100 rounded-xl inline-block py-1 px-2">
+                    수경
+                  </span>
+                  <span className="text-sm bg-blue-100 rounded-xl inline-block py-1 px-2">
+                    지혜
+                  </span>
+                </div>
+                <span className="text-sm">2024 / 2 / 14</span>
+              </div>
+              <span
+                key={index}
+                className="col-span-1 flex items-center justify-center rounded-md overflow-hidden min-h-[200px] max-h-[200px]"
+              >
+                <img src={imagePaths[0]} />
+              </span>
+            </div>
           </Link>
         ))}
       </div>
