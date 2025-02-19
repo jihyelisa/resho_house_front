@@ -2,11 +2,11 @@ import { useState } from "react";
 
 const EventUpload = () => {
   return (
-    <div className="text-center flex flex-col h-[calc(100vh-120px)]">
+    <div className="text-center flex flex-col items-center h-[calc(100vh-120px)]">
       <span className="sticky top-14 bg-white w-full py-8">
         <h2 className="text-3xl font-bold">New Event</h2>
       </span>
-      <div className="flex flex-col flex-grow gap-6 w-full justify-between px-20 py-14 rounded-md border-2 border-blue-300">
+      <div className="flex flex-col flex-grow gap-6 w-4/5 justify-between px-20 py-14 rounded-md border-2 border-blue-300">
         <p className="text-gray-600 min-w-full">
           <strong>
             <input
@@ -16,7 +16,7 @@ const EventUpload = () => {
           </strong>
         </p>
         <div
-          className="resize-none flex-grow text-start text-gray-900 whitespace-pre-wrap bg-transparent focus-visible:outline-none placeholder-gray-400 placeholder:italic border p-2"
+          className="resize-none flex-grow text-start text-gray-900 whitespace-pre-wrap bg-transparent focus-visible:outline-none placeholder-gray-400 placeholder:italic p-2"
           contentEditable
         ></div>
         {/* <div className="grid grid-cols-3 gap-6 mt-6">

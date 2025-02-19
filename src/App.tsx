@@ -108,7 +108,7 @@ function App() {
     <Router>
       <div className="flex flex-col min-h-screen h-full w-full items-center">
         <Navbar />
-        <div className="w-[1000px] h-full flex flex-col justify-center">
+        <div className="w-[1000px] h-full flex flex-col flex-grow justify-center">
           <AnimatedRoutes />
         </div>
         <Footer />
