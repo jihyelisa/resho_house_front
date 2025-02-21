@@ -24,7 +24,7 @@ const EventDetail = () => {
 
   return (
     <div className="text-center flex-grow flex flex-col justify-start">
-      <span className="sticky top-14 flex-grow bg-white w-full py-8">
+      <span className="top-14 flex-grow bg-white w-full py-8">
         <h2 className="text-3xl font-bold">Event Detail</h2>
         <p className="text-gray-600">{eventTitle}</p>
       </span>

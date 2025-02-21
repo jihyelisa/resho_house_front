@@ -18,9 +18,7 @@ const Navbar = () => {
         <Link to="/events" className="hover:underline text-white">
           Events
         </Link>
-        <Link to="/gallery" className="hover:underline text-white">
-          Gallery
-        </Link>
+        {/* <Link to="/gallery" className="hover:underline text-white">Gallery</Link> */}
         <Link to="/eventupload" className="hover:underline text-white">
           Upload
         </Link>

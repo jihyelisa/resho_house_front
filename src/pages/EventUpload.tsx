@@ -15,10 +15,7 @@ const EventUpload = () => {
             />
           </strong>
         </p>
-        <div
-          className="resize-none flex-grow text-start text-gray-900 whitespace-pre-wrap bg-transparent focus-visible:outline-none placeholder-gray-400 placeholder:italic p-2"
-          contentEditable
-        ></div>
+        <textarea className="resize-none flex-grow text-start text-gray-900 whitespace-pre-wrap bg-transparent focus-visible:outline-none placeholder-gray-400 placeholder:italic p-2"></textarea>
         {/* <div className="grid grid-cols-3 gap-6 mt-6">
           <span className="rounded-md overflow-hidden max-h-40 flex items-center">
             <img

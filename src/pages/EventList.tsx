@@ -24,36 +24,36 @@ const EventList = () => {
 
   return (
     <div className="text-center flex-grow flex flex-col items-center">
-      <span className="sticky top-14 w-full py-8 bg-white">
+      <span className="top-14 w-full py-8 bg-white">
         <h2 className="text-3xl font-bold">Events</h2>
         <p className="text-gray-600">이벤트 리스트</p>
       </span>
       {/* <div className="flex flex-col flex-grow gap-3 w-full"> */}
-      <div className="grid grid-cols-1 flex-grow gap-6 w-4/5">
+      <div className="grid grid-cols-1 flex-grow gap-4 w-4/5">
         {events.map((event, index) => (
           <Link key={index} to={`/eventdetail/${index}`}>
             <div
               key={index}
-              className="grid grid-cols-3 gap-8 text-start items-center py-4 px-8 rounded-md bg-white text-gray-900 min-h-20 border-2 border-blue-100"
+              className="grid grid-cols-3 gap-8 text-start items-center py-3 px-6 rounded-md bg-white text-gray-900 min-h-20 border-2 border-blue-100"
             >
-              <div className="col-span-2 flex flex-col gap-1">
-                <span className="text-sm mb-1">2024 / 2 / 14</span>
+              <div className="col-span-2 flex flex-col gap-0">
+                <span className="text-xs mb-1">2024 / 2 / 14</span>
                 <span className="">
                   <strong>{event}</strong>
                 </span>
-                <span className="leading-tight text-gray-300">
+                <span className="leading-tight text-gray-300 text-sm">
                   Cras convallis nibh eget dui placerat, eget auctor neque
                   sagittis. eget auctor neque sagittis quis sollicitudin sapien.
                   Cras...
                 </span>
                 <div className="flex gap-2 mt-3">
-                  <span className="text-sm bg-blue-100 rounded-xl inline-block py-1 px-2">
+                  <span className="text-xs bg-blue-100 rounded-xl inline-block py-1 px-2">
                     유진
                   </span>
-                  <span className="text-sm bg-blue-100 rounded-xl inline-block py-1 px-2">
+                  <span className="text-xs bg-blue-100 rounded-xl inline-block py-1 px-2">
                     수경
                   </span>
-                  <span className="text-sm bg-blue-100 rounded-xl inline-block py-1 px-2">
+                  <span className="text-xs bg-blue-100 rounded-xl inline-block py-1 px-2">
                     지혜
                   </span>
                 </div>
@@ -61,7 +61,7 @@ const EventList = () => {
 
               <span
                 key={index}
-                className="col-span-1 flex items-center justify-center rounded-md overflow-hidden min-h-[160px] max-h-[160px]"
+                className="col-span-1 flex items-center justify-center rounded-md overflow-hidden min-h-[130px] max-h-[130px]"
               >
                 <img src={imagePaths[0]} />
               </span>
