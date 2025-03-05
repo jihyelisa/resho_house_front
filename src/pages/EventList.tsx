@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const EventList = () => {
@@ -22,6 +23,20 @@ const EventList = () => {
     "/images/photo_sample_3.jpeg",
   ];
 
+  const sortingOptions = ["Gathering Date", "Written Date"];
+
+  const [seletedSorting, setSelectedSorting] =
+    useState<string>("Gathering Date");
+  const [isSortingOpen, setIsSortingOpen] = useState<boolean>(false);
+
+  const handleSortingOpen = () => {
+    setIsSortingOpen(!isSortingOpen);
+  };
+  const handleSortingSelect = (value: string) => {
+    setSelectedSorting(value);
+    setIsSortingOpen(false);
+  };
+
   return (
     <div className="text-center flex-grow flex flex-col items-center">
       <span className="top-14 w-full py-8 bg-white">
@@ -29,6 +44,37 @@ const EventList = () => {
         <p className="text-gray-600">이벤트 리스트</p>
       </span>
       {/* <div className="flex flex-col flex-grow gap-3 w-full"> */}
+      <div className="flex justify-between w-4/5 mb-4">
+        <div className="relative w-64">
+          <p
+            className="w-full flex items-center py-2 px-6 rounded-md border-2 border-blue-100 bg-white cursor-pointer"
+            onClick={() => handleSortingOpen()}
+          >
+            {seletedSorting}
+          </p>
+
+          {isSortingOpen && (
+            <div className="absolute top-full left-0 w-full mt-0 bg-white shadow-md rounded-md border-2 border-blue-100">
+              {sortingOptions.map((option) => (
+                <p
+                  className="flex items-center py-2 px-6 cursor-pointer hover:bg-blue-100"
+                  onClick={() => handleSortingSelect(option)}
+                >
+                  {option}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center rounded-md border-2 border-blue-100">
+          <span className="border-r-2 border-blue-100 py-2 px-8">category</span>
+          <span className="py-2 px-8">input</span>
+        </div>
+        <button className="flex items-center h-12 py-3 px-8 rounded-md border-2 border-blue-100">
+          search
+        </button>
+      </div>
       <div className="grid grid-cols-1 flex-grow gap-4 w-4/5">
         {events.map((event, index) => (
           <Link key={index} to={`/eventdetail/${index}`}>
@@ -44,18 +90,21 @@ const EventList = () => {
                 <span className="leading-tight text-gray-300 text-sm">
                   Cras convallis nibh eget dui placerat, eget auctor neque
                   sagittis. eget auctor neque sagittis quis sollicitudin sapien.
-                  Cras...
+                  Cra neque sagittis...
                 </span>
-                <div className="flex gap-2 mt-3">
-                  <span className="text-xs bg-blue-100 rounded-xl inline-block py-1 px-2">
+                <div className="flex gap-2 mt-2 items-center">
+                  <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2">
                     유진
                   </span>
-                  <span className="text-xs bg-blue-100 rounded-xl inline-block py-1 px-2">
+                  <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2">
                     수경
                   </span>
-                  <span className="text-xs bg-blue-100 rounded-xl inline-block py-1 px-2">
+                  <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2">
                     지혜
                   </span>
+                  <p className="text-xs text-blue-400 font-medium ml-2">
+                    Written by {event.slice(0, 2)}
+                  </p>
                 </div>
               </div>
 

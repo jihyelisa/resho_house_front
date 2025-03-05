@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const SignUp = () => {
   return (
     <div className="p-6 flex flex-col justify-center items-center">
@@ -27,9 +29,15 @@ const SignUp = () => {
           />
         </span>
       </div>
-      <button className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 w-[360px]">
+      <button className="bg-blue-600 text-white py-2 px-4 border-2 border-blue-600 rounded-md w-[360px] mb-2">
         Sign Up
       </button>
+      <p className="text-gray-300 text-m">Already have an account?</p>
+      <Link to="/signin">
+        <button className="bg-white text-blue-600 border-2 border-blue-600 py-2 px-4 rounded-md w-[360px]">
+          Sign In
+        </button>
+      </Link>
     </div>
   );
 };
