@@ -23,10 +23,15 @@ const EventList = () => {
     "/images/photo_sample_3.jpeg",
   ];
 
-  const sortingOptions = ["Gathering Date", "Written Date"];
+  const sortingOptions = [
+    "Gathering Date ⬇️",
+    "Gathering Date ⬆️",
+    "Written Date ⬇️",
+    "Written Date ⬆️",
+  ];
 
   const [seletedSorting, setSelectedSorting] =
-    useState<string>("Gathering Date");
+    useState<string>("Gathering Date ⬇️");
   const [isSortingOpen, setIsSortingOpen] = useState<boolean>(false);
 
   const handleSortingOpen = () => {
@@ -40,24 +45,24 @@ const EventList = () => {
   return (
     <div className="text-center flex-grow flex flex-col items-center">
       <span className="top-14 w-full py-8 bg-white">
-        <h2 className="text-3xl font-bold">Events</h2>
-        <p className="text-gray-600">이벤트 리스트</p>
+        {/* <h2 className="text-3xl font-bold">Events</h2>
+        <p className="text-gray-600">이벤트 리스트</p> */}
       </span>
       {/* <div className="flex flex-col flex-grow gap-3 w-full"> */}
       <div className="flex justify-between w-4/5 mb-4">
-        <div className="relative w-64">
+        <div className="relative w-[11rem] h-[3rem]">
           <p
-            className="w-full flex items-center py-2 px-6 rounded-md border-2 border-blue-100 bg-white cursor-pointer"
+            className="text-blue-300 font-md w-[11rem] h-[3rem] flex items-center py-2 px-2 rounded-md border-2 border-blue-300 bg-white cursor-pointer justify-center"
             onClick={() => handleSortingOpen()}
           >
             {seletedSorting}
           </p>
 
           {isSortingOpen && (
-            <div className="absolute top-full left-0 w-full mt-0 bg-white shadow-md rounded-md border-2 border-blue-100">
+            <div className="flex flex-col items-center justify-center absolute top-full left-0 w-[11rem] mt-0 bg-white shadow-md rounded-md border-2 border-blue-300 overflow-hidden">
               {sortingOptions.map((option) => (
                 <p
-                  className="flex items-center py-2 px-6 cursor-pointer hover:bg-blue-100"
+                  className="font-md flex items-center justify-center w-[11rem] py-2 px-2 cursor-pointer hover:bg-blue-300"
                   onClick={() => handleSortingSelect(option)}
                 >
                   {option}
@@ -67,11 +72,14 @@ const EventList = () => {
           )}
         </div>
 
-        <div className="flex items-center rounded-md border-2 border-blue-100">
-          <span className="border-r-2 border-blue-100 py-2 px-8">category</span>
-          <span className="py-2 px-8">input</span>
+        <div className="h-[3rem] flex items-center rounded-md border-2 border-blue-300">
+          <span className="font-md text-blue-300 border-r-2 border-blue-300 w-[10rem] h-full px-4 py-2 flex items-center justify-center">
+            category
+            <img />
+          </span>
+          <input className="py-2 px-4 w-[20rem] outline-none" />
         </div>
-        <button className="flex items-center h-12 py-3 px-8 rounded-md border-2 border-blue-100">
+        <button className="font-semibold flex text-md items-center h-12 py-2 px-8 rounded-md border-2 text-white border-blue-300 bg-blue-300">
           search
         </button>
       </div>

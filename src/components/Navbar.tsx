@@ -3,7 +3,7 @@ import logo from "../assets/resho_logo.png";
 
 const Navbar = () => {
   return (
-    <nav className="w-full bg-blue-300 h-14 px-6 text-white flex justify-between items-center sticky top-0">
+    <nav className="w-full bg-blue-300 h-14 px-6 text-white flex justify-between items-center sticky top-0 z-50">
       <Link
         to="/"
         className="text-white flex gap-3 justify-center items-center"
