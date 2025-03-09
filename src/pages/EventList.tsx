@@ -49,8 +49,8 @@ const EventList = () => {
         <p className="text-gray-600">이벤트 리스트</p> */}
       </span>
       {/* <div className="flex flex-col flex-grow gap-3 w-full"> */}
-      <div className="flex justify-between w-4/5 mb-4">
-        <div className="relative w-[11rem] h-[3rem]">
+      <div className="flex justify-between w-4/5 mb-4 relative">
+        <div className="relative w-[11rem] h-[3rem] sticky top-0">
           <p
             className="text-blue-300 font-md w-[11rem] h-[3rem] flex items-center py-2 px-2 rounded-md border-2 border-blue-300 bg-white cursor-pointer justify-center"
             onClick={() => handleSortingOpen()}
