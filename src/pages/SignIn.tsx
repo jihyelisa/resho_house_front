@@ -9,10 +9,8 @@ const SignIn = () => {
   const handleSignInClick = () => {
     axios
       .post("http://localhost:5232/api/auth/login", {
-        params: {
-          email: email,
-          password: password,
-        },
+        Email: email,
+        Password: password,
       })
       .then((response) => {
         console.log(response.data);
