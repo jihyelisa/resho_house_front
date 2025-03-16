@@ -13,8 +13,14 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import EventDetail from "./pages/EventDetail";
 import EventUpload from "./pages/EventUpload";
+import { useState } from "react";
+import Profile from "./pages/Profile";
 
-function AnimatedRoutes() {
+interface AnimatedRoutesProps {
+  setIsSignedIn: (value: boolean) => void;
+}
+
+const AnimatedRoutes = ({ setIsSignedIn }: AnimatedRoutesProps) => {
   const location = useLocation();
 
   return (
@@ -55,7 +61,7 @@ function AnimatedRoutes() {
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <SignIn />
+              <SignIn setIsSignedIn={setIsSignedIn} />
             </motion.div>
           }
         />
@@ -98,18 +104,33 @@ function AnimatedRoutes() {
             </motion.div>
           }
         />
+        <Route
+          path="/profile"
+          element={
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Profile setIsSignedIn={setIsSignedIn} />
+            </motion.div>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );
-}
+};
 
 function App() {
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+
   return (
     <Router>
       <div className="flex flex-col min-h-screen h-full w-full items-center">
-        <Navbar />
+        <Navbar isSignedIn={isSignedIn} />
         <div className="w-[1000px] h-full flex flex-col flex-grow justify-center">
-          <AnimatedRoutes />
+          <AnimatedRoutes setIsSignedIn={setIsSignedIn} />
         </div>
         <Footer />
       </div>
