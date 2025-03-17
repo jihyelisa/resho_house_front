@@ -11,12 +11,13 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   const [profileImg, setProfileImg] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
-  const [isPwdValid, setIsPwdValid] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>("********");
+  const [confirmPassword, setConfirmPassword] = useState<string>("********");
+
+  const [isUsernameValid, setIsUsernameValid] = useState<boolean>(true);
+  const [pwdChange, setPwdChange] = useState<boolean>(false);
+  const [isPwdValid, setIsPwdValid] = useState<boolean>(true);
   const [isPwdConfirmed, setIsPwdConfirmed] = useState<boolean>(true);
-  const [isUsernameValid, setIsUsernameValid] = useState<boolean>(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -33,6 +34,15 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   }, []);
 
   const handleUploadProfileImg = () => {};
+
+  const handleChangePwdClick = () => {
+    console.log(isPwdConfirmed, isPwdValid, isUsernameValid);
+
+    setPassword("");
+    setConfirmPassword("");
+    setPwdChange(true);
+    setIsPwdValid(false);
+  };
 
   const handleSignOutClick = () => {
     axios
@@ -68,11 +78,6 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   //   };
 
   useEffect(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsEmailValid(emailRegex.test(email));
-  }, [email]);
-
-  useEffect(() => {
     setIsPwdValid(password.length >= 8);
   }, [password]);
 
@@ -81,12 +86,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   }, [username]);
 
   useEffect(() => {
-    setIsPwdConfirmed(
-      (password === "" && confirmPassword === "") ||
-        password === confirmPassword
-        ? true
-        : false
-    );
+    setIsPwdConfirmed(password === confirmPassword ? true : false);
   }, [confirmPassword, password]);
 
   return (
@@ -94,7 +94,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
       {/* <h2 className="text-3xl font-bold">Sign Up</h2> */}
       <span className="flex flex-col justify-center items-start w-[20rem] m-1">
         <img
-          className="self-center w-[10rem] h-[10rem] m-4 rounded-full"
+          className="self-center w-[10rem] h-[10rem] m-1 rounded-full"
           src={profileImg}
           onClick={handleUploadProfileImg}
         />
@@ -104,21 +104,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
         >
           Email
         </label>
-        <input
-          className="border p-2 w-full h-[2.8rem] rounded-md"
-          type="text"
-          id="signup-email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {isEmailValid ? (
-          <p className="text-blue-600 text-sm">🔵 Valid email</p>
-        ) : (
-          <p className="text-red-500 text-sm">
-            🚫 Please enter a valid email address
-          </p>
-        )}
+        <p className="border py-2 px-4 w-full rounded-md">{email}</p>
 
         <label
           className="flex items-end w-full h-[2rem]"
@@ -127,7 +113,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
           Username
         </label>
         <input
-          className="border p-2 w-full h-[2.8rem] rounded-md"
+          className="border py-2 px-4 w-full rounded-md"
           type="text"
           id="username"
           name="username"
@@ -135,63 +121,79 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
           onChange={(e) => setUsername(e.target.value)}
         />
         {isUsernameValid ? (
-          <p className="text-blue-600 text-sm">🔵 Passwords match</p>
+          <p className="text-blue-600 text-sm">🔵 Valid username</p>
         ) : (
-          <p className="text-red-500 text-sm">🚫 Passwords do not match</p>
+          <p className="text-red-500 text-sm">🚫 Cannot be empty</p>
         )}
 
-        <label className="flex items-end w-full h-[2rem]" htmlFor="signup-pwd">
-          Password
-        </label>
-        <input
-          className="border p-2 w-full h-[2.8rem] rounded-md"
-          type="password"
-          id="signup-pwd"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {isPwdValid ? (
-          <p className="text-blue-600 text-sm">🔵 Valid password</p>
-        ) : (
-          <p className="text-red-500 text-sm">
-            🚫 Must be at least 8 characters long
-          </p>
-        )}
+        {pwdChange ? (
+          <>
+            <label
+              className="flex items-end w-full h-[2rem]"
+              htmlFor="signup-pwd"
+            >
+              Password
+            </label>
+            <input
+              className="border py-2 px-4 w-full rounded-md"
+              type="password"
+              id="signup-pwd"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {isPwdValid ? (
+              <p className="text-blue-600 text-sm">🔵 Valid password</p>
+            ) : (
+              <p className="text-red-500 text-sm">
+                🚫 Must be at least 8 characters long
+              </p>
+            )}
 
-        <label
-          className="flex items-end w-full h-[2rem]"
-          htmlFor="signup-confirm-pwd"
-        >
-          Confirm Password
-        </label>
-        <input
-          className="border p-2 w-full h-[2.8rem] rounded-md"
-          type="password"
-          id="signup-confirm-pwd"
-          name="confirmPassword"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        {isPwdConfirmed ? (
-          <p className="text-blue-600 text-sm">🔵 Passwords match</p>
+            <label
+              className="flex items-end w-full h-[2rem]"
+              htmlFor="signup-confirm-pwd"
+            >
+              Confirm Password
+            </label>
+            <input
+              className="border py-2 px-4 w-full rounded-md"
+              type="password"
+              id="signup-confirm-pwd"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {isPwdConfirmed ? (
+              <p className="text-blue-600 text-sm mb-4">🔵 Passwords match</p>
+            ) : (
+              <p className="text-red-500 text-sm mb-4">
+                🚫 Passwords do not match
+              </p>
+            )}
+          </>
         ) : (
-          <p className="text-red-500 text-sm">🚫 Passwords do not match</p>
+          <button
+            className="bg-white text-blue-600 mt-4 py-2 px-4 border-2 border-blue-600 rounded-md w-[20rem]"
+            onClick={handleChangePwdClick}
+          >
+            Change Password
+          </button>
         )}
       </span>
-      {/* <Link to="/"> */}
+
       <button
         className={
-          (isEmailValid && isPwdValid && isPwdConfirmed && isUsernameValid
+          (isPwdValid && isPwdConfirmed && isUsernameValid
             ? "bg-blue-600 border-blue-600 "
             : "bg-gray-300 border-gray-300 ") +
           "text-white m-1 py-2 px-4 border-2 rounded-md w-[20rem]"
         }
-        disabled={!isEmailValid && !isPwdValid && !isPwdConfirmed}
+        disabled={!(isPwdValid && isPwdConfirmed && isUsernameValid)}
+        onClick={() => alert(1)}
       >
         Save Changes
       </button>
-      {/* </Link> */}
       <button
         className="bg-white text-gray-400 underline py-2 px-4 rounded-md w-[20rem]"
         onClick={handleSignOutClick}
