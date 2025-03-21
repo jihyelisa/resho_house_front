@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SignInProps {
   setIsSignedIn: (value: boolean) => void;
@@ -36,12 +36,30 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   const handleUploadProfileImg = () => {};
 
   const handleChangePwdClick = () => {
-    console.log(isPwdConfirmed, isPwdValid, isUsernameValid);
-
     setPassword("");
     setConfirmPassword("");
     setPwdChange(true);
     setIsPwdValid(false);
+  };
+
+  const handleSaveClick = () => {
+    axios
+      .put(
+        "http://localhost:5232/api/users/update",
+        { Email: email, PasswordHash: password, Username: username },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if (response.data.success) {
+          setIsSignedIn(false);
+          navigate("/");
+        } else {
+          //   showErrorMessage("Invalid email or password.");
+        }
+      })
+      .catch((err) => {
+        // showErrorMessage("Invalid email or password.");
+      });
   };
 
   const handleSignOutClick = () => {
@@ -64,19 +82,6 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
       });
   };
 
-  //   const showErrorMessage = (message: string) => {
-  //     setError(message);
-  //     setShowError(true); // ✅ 처음에는 opacity 1
-
-  //     setTimeout(() => {
-  //       setShowError(false); // ✅ 페이드아웃 효과 (opacity 0)
-  //     }, 1200); // 1.4초 후 페이드아웃 시작
-
-  //     setTimeout(() => {
-  //       setError(null); // ✅ 완전히 삭제
-  //     }, 2000); // 2초 후 완전히 제거
-  //   };
-
   useEffect(() => {
     setIsPwdValid(password.length >= 8);
   }, [password]);
@@ -91,7 +96,6 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
 
   return (
     <div className="p-6 flex flex-col justify-center items-center">
-      {/* <h2 className="text-3xl font-bold">Sign Up</h2> */}
       <span className="flex flex-col justify-center items-start w-[20rem] m-1">
         <img
           className="self-center w-[10rem] h-[10rem] m-1 rounded-full"
@@ -190,7 +194,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
           "text-white m-1 py-2 px-4 border-2 rounded-md w-[20rem]"
         }
         disabled={!(isPwdValid && isPwdConfirmed && isUsernameValid)}
-        onClick={() => alert(1)}
+        onClick={handleSaveClick}
       >
         Save Changes
       </button>
