@@ -156,7 +156,7 @@ const EventList = () => {
                   {event.eventImageList[0] ? (
                     <img src={event.eventImageList[0]} />
                   ) : (
-                    <p>No Image</p>
+                    <p className="text-blue-300">No Image</p>
                   )}
                 </span>
               </div>

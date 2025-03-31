@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ProfileUploader from "../components/ProfileUploader";
 
 interface SignInProps {
   setIsSignedIn: (value: boolean) => void;
@@ -46,7 +47,12 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
     axios
       .put(
         "http://localhost:5232/api/users/update",
-        { Email: email, PasswordHash: password, Username: username },
+        {
+          Email: email,
+          PasswordHash: password,
+          Username: username,
+          ProfileImageUrl: profileImg,
+        },
         { withCredentials: true }
       )
       .then((response) => {
@@ -97,11 +103,12 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   return (
     <div className="p-6 flex flex-col justify-center items-center">
       <span className="flex flex-col justify-center items-start w-[20rem] m-1">
-        <img
+        {/* <img
           className="self-center w-[10rem] h-[10rem] m-1 rounded-full"
           src={profileImg}
           onClick={handleUploadProfileImg}
-        />
+        /> */}
+        <ProfileUploader onUploadSuccess={setProfileImg} imgUrl={profileImg} />
         <label
           className="flex items-end w-full h-[2rem]"
           htmlFor="signup-email"
