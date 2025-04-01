@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import FadeOutMessage from "../components/FadeOutMessage"; // 경로는 맞게 수정!
+import FadeOutMessage from "../components/FadeOutMessage";
 
 interface SignInProps {
   setIsSignedIn: (value: boolean) => void;

@@ -1,4 +1,3 @@
-// components/FadeOutMessage.tsx
 import { useEffect, useState } from "react";
 
 interface FadeOutMessageProps {

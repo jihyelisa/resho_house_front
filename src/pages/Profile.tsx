@@ -2,10 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileUploader from "../components/ProfileUploader";
+import FadeOutMessage from "../components/FadeOutMessage";
 
 interface SignInProps {
   setIsSignedIn: (value: boolean) => void;
 }
+
+const CLOUD_NAME = "drhlofiqx";
+const UPLOAD_PRESET = "unsigned_upload";
 
 const Profile = ({ setIsSignedIn }: SignInProps) => {
   const navigate = useNavigate();
@@ -19,7 +23,9 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   const [pwdChange, setPwdChange] = useState<boolean>(false);
   const [isPwdValid, setIsPwdValid] = useState<boolean>(true);
   const [isPwdConfirmed, setIsPwdConfirmed] = useState<boolean>(true);
-  const [error, setError] = useState(null);
+  const [msg, setMsg] = useState<string>("");
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     axios
@@ -30,11 +36,9 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
         setUsername(response.data.username);
       })
       .catch((err) => {
-        setError(err.message);
+        setMsg(err.message);
       });
   }, []);
-
-  const handleUploadProfileImg = () => {};
 
   const handleChangePwdClick = () => {
     setPassword("");
@@ -43,7 +47,31 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
     setIsPwdValid(false);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    let uploadedUrl = profileImg;
+
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("upload_preset", UPLOAD_PRESET);
+
+      try {
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const data = await res.json();
+        uploadedUrl = data.secure_url;
+      } catch (err) {
+        setMsg("이미지 업로드에 실패했습니다.");
+        return;
+      }
+    }
+
     axios
       .put(
         "http://localhost:5232/api/users/update",
@@ -51,20 +79,20 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
           Email: email,
           PasswordHash: password,
           Username: username,
-          ProfileImageUrl: profileImg,
+          ProfileImageUrl: uploadedUrl,
         },
         { withCredentials: true }
       )
       .then((response) => {
-        if (response.data.success) {
-          setIsSignedIn(false);
-          navigate("/");
+        if (response.data.message) {
+          setMsg(response.data.message);
+          setProfileImg(uploadedUrl); // 업로드 성공 시 이미지 적용
         } else {
-          //   showErrorMessage("Invalid email or password.");
+          setMsg("Failed to update the profile.");
         }
       })
       .catch((err) => {
-        // showErrorMessage("Invalid email or password.");
+        setMsg("프로필 저장에 실패했습니다.");
       });
   };
 
@@ -79,12 +107,10 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
         if (response.data.success) {
           setIsSignedIn(false);
           navigate("/");
-        } else {
-          //   showErrorMessage("Invalid email or password.");
         }
       })
       .catch((err) => {
-        // showErrorMessage("Invalid email or password.");
+        setMsg("로그아웃에 실패했습니다.");
       });
   };
 
@@ -97,18 +123,18 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   }, [username]);
 
   useEffect(() => {
-    setIsPwdConfirmed(password === confirmPassword ? true : false);
+    setIsPwdConfirmed(password === confirmPassword);
   }, [confirmPassword, password]);
 
   return (
     <div className="p-6 flex flex-col justify-center items-center">
       <span className="flex flex-col justify-center items-start w-[20rem] m-1">
-        {/* <img
-          className="self-center w-[10rem] h-[10rem] m-1 rounded-full"
-          src={profileImg}
-          onClick={handleUploadProfileImg}
-        /> */}
-        <ProfileUploader onUploadSuccess={setProfileImg} imgUrl={profileImg} />
+        <ProfileUploader
+          previewUrl={
+            selectedFile ? URL.createObjectURL(selectedFile) : profileImg
+          }
+          onFileSelect={setSelectedFile}
+        />
         <label
           className="flex items-end w-full h-[2rem]"
           htmlFor="signup-email"
@@ -211,6 +237,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
       >
         Sign Out
       </button>
+      {msg && <FadeOutMessage message={msg} onClear={() => setMsg("")} />}
     </div>
   );
 };
