@@ -14,6 +14,7 @@ const EventList = () => {
   type User = {
     id: number;
     username: string;
+    profileImageUrl: string;
   };
 
   const [events, setEvents] = useState<Event[]>([]);
@@ -133,19 +134,23 @@ const EventList = () => {
                   <span className="leading-tight text-gray-300 text-sm h-[3rem]">
                     {event.content.slice(0, 100)}
                   </span>
-                  <div className="flex gap-2 mt-2 items-center">
-                    <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2">
+                  <div className="flex gap-0 mt-2 items-center">
+                    <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2 mr-1">
                       유진
                     </span>
-                    <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2">
+                    <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2 mr-1">
                       수경
                     </span>
-                    <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2">
+                    <span className="text-xs font-semibold bg-blue-100 rounded-xl inline-block py-1 px-2 mr-1">
                       지혜
                     </span>
-                    <p className="text-xs text-blue-400 font-medium ml-2">
-                      Written by {event.user.username}
+                    <p className="text-xs text-gray-400 font-medium ml-4 mr-1">
+                      by
                     </p>
+                    <img
+                      className="w-[1.6rem] h-[1.6rem] object-cover overflow-hidden rounded-[100px]"
+                      src={event.user.profileImageUrl}
+                    />
                   </div>
                 </div>
 

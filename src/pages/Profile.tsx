@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileUploader from "../components/ProfileUploader";
 import FadeOutMessage from "../components/FadeOutMessage";
+import { fast } from "@cloudinary/url-gen/qualifiers/FontAntialias";
 
 interface SignInProps {
   setIsSignedIn: (value: boolean) => void;
@@ -23,6 +24,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   const [pwdChange, setPwdChange] = useState<boolean>(false);
   const [isPwdValid, setIsPwdValid] = useState<boolean>(true);
   const [isPwdConfirmed, setIsPwdConfirmed] = useState<boolean>(true);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [msg, setMsg] = useState<string>("");
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -48,6 +50,8 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
   };
 
   const handleSaveClick = async () => {
+    setIsUpdating(true);
+
     let uploadedUrl = profileImg;
 
     if (selectedFile) {
@@ -66,6 +70,7 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
 
         const data = await res.json();
         uploadedUrl = data.secure_url;
+        setSelectedFile(null);
       } catch (err) {
         setMsg("이미지 업로드에 실패했습니다.");
         return;
@@ -77,9 +82,10 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
         "http://localhost:5232/api/users/update",
         {
           Email: email,
-          PasswordHash: password,
+          PasswordHash:
+            pwdChange && isPwdConfirmed && isPwdValid ? password : null,
           Username: username,
-          ProfileImageUrl: uploadedUrl,
+          ProfileImageUrl: selectedFile ? uploadedUrl : profileImg,
         },
         { withCredentials: true }
       )
@@ -87,12 +93,15 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
         if (response.data.message) {
           setMsg(response.data.message);
           setProfileImg(uploadedUrl); // 업로드 성공 시 이미지 적용
+          setIsUpdating(false);
         } else {
           setMsg("Failed to update the profile.");
+          setIsUpdating(false);
         }
       })
       .catch((err) => {
         setMsg("프로필 저장에 실패했습니다.");
+        setIsUpdating(false);
       });
   };
 
@@ -226,10 +235,12 @@ const Profile = ({ setIsSignedIn }: SignInProps) => {
             : "bg-gray-300 border-gray-300 ") +
           "text-white m-1 py-2 px-4 border-2 rounded-md w-[20rem]"
         }
-        disabled={!(isPwdValid && isPwdConfirmed && isUsernameValid)}
+        disabled={
+          !(isPwdValid && isPwdConfirmed && isUsernameValid) || isUpdating
+        }
         onClick={handleSaveClick}
       >
-        Save Changes
+        {isUpdating ? "Updating..." : "Save Changes"}
       </button>
       <button
         className="bg-white text-gray-400 underline py-2 px-4 rounded-md w-[20rem]"

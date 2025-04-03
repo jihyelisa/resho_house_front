@@ -26,6 +26,7 @@ const SignIn = ({ setIsSignedIn }: SignInProps) => {
         }
       )
       .then((response) => {
+        console.log(response);
         if (response.data.success) {
           setIsSignedIn(true);
           navigate("/");

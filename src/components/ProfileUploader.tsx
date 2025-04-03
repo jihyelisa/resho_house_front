@@ -23,11 +23,11 @@ const ProfileUploader = ({
         onClick={() => inputRef.current?.click()}
       >
         <img
-          className="w-full h-full object-cover"
+          className="w-full h-full object"
           src={previewUrl || "/default.png"}
           alt="profile"
         />
-        <div className="absolute inset-0 hidden group-hover:flex items-center justify-center bg-gray-800 bg-opacity-60">
+        <div className="absolute inset-0 hidden group-hover:flex items-center justify-center bg-gray-800 bg-opacity-60 pl-2 pb-1">
           <img
             className="w-10 h-10 filter invert"
             src="/images/icons/edit.png"
