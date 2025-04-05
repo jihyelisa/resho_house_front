@@ -129,7 +129,7 @@ function App() {
     <Router>
       <div className="flex flex-col min-h-screen h-full w-full items-center">
         <Navbar isSignedIn={isSignedIn} />
-        <div className="w-[1000px] h-full flex flex-col flex-grow justify-center">
+        <div className="w-[900px] h-full flex flex-col flex-grow justify-center">
           <AnimatedRoutes setIsSignedIn={setIsSignedIn} />
         </div>
         <Footer />

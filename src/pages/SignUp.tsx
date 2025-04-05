@@ -31,9 +31,6 @@ const SignUp = () => {
   }, [confirmPassword, password]);
 
   const handleSignUpClick = () => {
-    console.log(email);
-    console.log(password);
-
     axios
       .post("http://localhost:5232/api/users/register", {
         Email: email,
