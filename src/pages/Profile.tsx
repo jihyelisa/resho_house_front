@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileUploader from "../components/ProfileUploader";
 import FadeOutMessage from "../components/FadeOutMessage";
-import { fast } from "@cloudinary/url-gen/qualifiers/FontAntialias";
 
 interface SignInProps {
   setIsSignedIn: (value: boolean) => void;

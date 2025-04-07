@@ -1,3 +1,4 @@
+import ProfilePopover from "@/components/ProfilePopOver";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -147,10 +148,7 @@ const EventList = () => {
                     <p className="text-xs text-gray-400 font-medium ml-4 mr-1">
                       by
                     </p>
-                    <img
-                      className="w-[1.6rem] h-[1.6rem] object-cover overflow-hidden rounded-[100px]"
-                      src={event.user.profileImageUrl}
-                    />
+                    <ProfilePopover user={event.user} />
                   </div>
                 </div>
 

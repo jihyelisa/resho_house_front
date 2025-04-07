@@ -1,10 +1,11 @@
 const Home = () => {
   return (
-    <div className="p-6 text-center justify-center">
-      <h2 className="text-3xl font-bold">RESHO</h2>
-      <p className="text-gray-600 mt-2">
-        뼈대만 있는 집에 초대합니다 ~ 웰컴 ^// ^
-      </p>
+    <div className="flex p-6 text-center justify-center align-center">
+      <img
+        src="/images/resho-logo-blue.png"
+        className="w-[400px]"
+        alt="'resho' logo"
+      />
     </div>
   );
 };
