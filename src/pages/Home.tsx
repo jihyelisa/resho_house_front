@@ -6,6 +6,7 @@ const Home = () => {
         className="w-[400px]"
         alt="'resho' logo"
       />
+      {/* <h1 className="text-[10rem]">저녁 먹으러 감</h1> */}
     </div>
   );
 };
